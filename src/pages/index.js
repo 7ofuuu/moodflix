@@ -1,118 +1,139 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Home() {
+  const moods = [
+    { id: "happy", name: "Happy", emoji: "😊", color: "bg-yellow-100 hover:bg-yellow-200" },
+    { id: "sad", name: "Melancholic", emoji: "😔", color: "bg-blue-100 hover:bg-blue-200" },
+    { id: "excited", name: "Thrilled", emoji: "🤩", color: "bg-red-100 hover:bg-red-200" },
+    { id: "cozy", name: "Cozy", emoji: "☕", color: "bg-orange-100 hover:bg-orange-200" },
+    { id: "nostalgic", name: "Nostalgic", emoji: "🕰️", color: "bg-purple-100 hover:bg-purple-200" },
+  ];
+
+  const trendingPlaylists = [
+    { title: "Feel-Good Classics", count: 12, updated: "Weekly" },
+    { title: "Cry It Out Therapy", count: 8, updated: "Monthly" },
+    { title: "Mind-Bending Thrillers", count: 10, updated: "Weekly" },
+  ];
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <Head>
+        <title>MoodFlix | Movies for Your Mood</title>
+        <meta name="description" content="Discover perfect movies based on your current mood" />
+      </Head>
+
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-7">
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold">MoodFlix</span>
+          </Link>
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/quiz">Get Started</Link>
+            </Button>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* Hero Section */}
+      <section className="container py-12 md:py-24">
+        <div className="mx-auto flex max-w-[64rem] flex-col items-center justify-center gap-6 text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            What&apos;s your <span className="text-primary">mood</span> today?
+          </h1>
+          <p className="max-w-[42rem] text-lg leading-normal text-muted-foreground sm:text-xl sm:leading-8">Get personalized movie recommendations that perfectly match how you feel right now.</p>
+          <div className="flex gap-4">
+            <Button asChild size="lg">
+              <Link href="/quiz">Take the Mood Quiz</Link>
+            </Button>
+            <Button variant="outline" asChild size="lg">
+              <Link href="#trending">Browse Playlists</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      {/* Mood Selection Grid */}
+      <section className="container py-12 px-7">
+        <h2 className="mb-8 text-center text-3xl font-bold">Popular Mood Categories</h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          {moods.map((mood) => (
+            <Button key={mood.id} variant="outline" className={`h-32 flex-col gap-2 text-lg ${mood.color}`} asChild>
+              <Link href={`/results?mood=${mood.id}`}>
+                <span className="text-3xl">{mood.emoji}</span>
+                {mood.name}
+              </Link>
+            </Button>
+          ))}
+        </div>
+      </section>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+      {/* Trending Playlists */}
+      <section id="trending" className="container py-12 px-7">
+        <h2 className="mb-8 text-center text-3xl font-bold">Trending Mood Playlists</h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          {trendingPlaylists.map((playlist) => (
+            <Card key={playlist.title} className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <h3 className="text-xl font-semibold">{playlist.title}</h3>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {playlist.count} movies • Updated {playlist.updated}
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href={`/playlist/${playlist.title.toLowerCase().replace(/\s+/g, "-")}`}>View Playlist</Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+      {/* CTA Section */}
+      <section className="container py-12 px-7">
+        <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
+          <CardHeader className="text-center">
+            <h2 className="text-3xl font-bold">Ready to find your perfect movie match?</h2>
+          </CardHeader>
+          <CardContent className="flex justify-center">
+            <Button size="lg" asChild>
+              <Link href="/quiz" className="gap-2">
+                Start Mood Quiz
+                <span className="text-xl">🎬</span>
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      {/* Footer */}
+      <footer className="border-t py-6 md:px-7">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <p className="text-sm text-muted-foreground">© 2025 MoodFlix. All rights reserved.</p>
+          <div className="flex gap-4">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/privacy">Privacy</Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/terms">Terms</Link>
+            </Button>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
 }
