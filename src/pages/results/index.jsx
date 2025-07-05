@@ -46,7 +46,7 @@ export default function ResultsPage() {
   const [error, setError] = useState(null);
   const currentMood = mood || "happy";
 
-  const fetchMovies = async () => {
+  const fetchAllMovies = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -120,7 +120,7 @@ export default function ResultsPage() {
   useEffect(() => {
     // Only fetch when router is ready and we have the necessary data
     if (router.isReady) {
-      fetchMovies();
+      fetchAllMovies();
     }
   }, [router.isReady, currentMood, genre, decade, duration]);
 
@@ -180,7 +180,7 @@ export default function ResultsPage() {
               <CardDescription>{error}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-              <Button onClick={fetchMovies}>Try Again</Button>
+              <Button onClick={fetchAllMovies}>Try Again</Button>
               <Button variant="outline" onClick={() => router.push("/quiz")}>
                 Retake Quiz
               </Button>
@@ -193,7 +193,7 @@ export default function ResultsPage() {
               <CardDescription>Try adjusting your preferences or retake the quiz.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-              <Button onClick={fetchMovies}>Try Again</Button>
+              <Button onClick={fetchAllMovies}>Try Again</Button>
               <Button variant="outline" onClick={() => router.push("/quiz")}>
                 Retake Quiz
               </Button>
@@ -201,7 +201,7 @@ export default function ResultsPage() {
           </Card>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               {movies.map((movie) => (
                 <Card key={movie.id} className="hover:shadow-lg transition-shadow h-full flex flex-col">
                   {movie.poster_path ? (
@@ -210,7 +210,7 @@ export default function ResultsPage() {
                       alt={movie.title}
                       width={500}
                       height={750}
-                      className="w-full h-64 object-cover rounded-t-lg"
+                      className="w-full h-full object-cover rounded-t-lg"
                       onError={(e) => {
                         e.target.src = "/placeholder-movie.jpg";
                         e.target.className = "w-full h-64 object-contain rounded-t-lg bg-gray-200 p-4";
